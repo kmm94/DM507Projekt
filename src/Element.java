@@ -5,8 +5,8 @@ public class Element {
     public int key;
     public Object data;
 
-    public Element(int i, Object o){
+    public Element(int i, Object data){
         this.key = i;
-        this.data = o;
+        this.data = data;
     }
 }
