@@ -10,7 +10,7 @@ public class PQHeap implements PQ {
      * @param maxElements The amount of elements that there is room for in the que
      */
     public PQHeap(int maxElements){
-        Element[] elements = new Element[maxElements+oneIndex];
+        elements = new Element[maxElements + oneIndex];
     }
 
     @Override
@@ -23,12 +23,17 @@ public class PQHeap implements PQ {
 
     @Override
     public void insert(Element e) {
-        elements[elements.length-oneIndex] = e;
-        int i = elements.length-oneIndex;
-        while (i> 1 && elements[parent(i)].key < elements[i].key){
-            swap(i,parent(i));
-            i=parent(i);
+        //insert
+        elements[elements.length - oneIndex] = e; // insert on last place
+        int heapsize = elements.length - oneIndex; // index where the element has bin inserted
+        System.out.println(elements[parent(heapsize)]);
+
+        //increase-key
+        while ( heapsize > 1 && elements[parent(heapsize)].key < elements[heapsize].key){
+            swap(heapsize,parent(heapsize)); //swaps the to elements
+            heapsize = parent(heapsize); // sets heapsize to the half
         }
+        System.out.println("insertion complete!");
     }
 
     private void MinHeapify(int i){
@@ -49,9 +54,9 @@ public class PQHeap implements PQ {
     }
 
     private void swap(int i, int k) {
-        Element temp = elements[i+oneIndex];
-        elements[i+oneIndex] = elements[k+oneIndex];
-        elements[k+oneIndex] = temp;
+        Element temp = elements[i];
+        elements[i] = elements[k];
+        elements[k] = temp;
     }
 
     private int parent(int i){
