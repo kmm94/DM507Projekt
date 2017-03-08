@@ -45,8 +45,10 @@ public class PQHeap implements PQ {
             current = Parent(current); // sets heapsize to the half
         }
     }
-
-    //min Heap
+    /**
+    * Method that heapifies the positions into a mininum heap.
+    * @param pos
+    */
     private void MinHeapify(int pos) {
         int left = leftChild(pos);
         int right = rightChild(pos);
@@ -65,22 +67,38 @@ public class PQHeap implements PQ {
             MinHeapify(Smallest);
         }
     }
-
+    
+    /**
+    * Method for swapping two elements making them change places.
+    * @param i
+    * @param k
+    */
     private void swap(int i, int k) {
         Element temp ;
         temp = heap[i];
         heap[i] = heap[k];
         heap[k] = temp;
     }
-
+    
+    /**
+    * Method for determining the parent of a node.
+    * @param i  
+    */
     private int Parent(int i) {
         return i / 2;
     }
-
+    
+    /**
+    * Method for determining the left child of a node.
+    * @param i  
+    */
     private int leftChild(int i) {
         return i * 2;
     }
-
+    /**
+    * Method for determining the right child of a node.
+    * @param i  
+    */
     private int rightChild(int i) {
         return i * 2 + 1;
     }
