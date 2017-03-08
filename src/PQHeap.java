@@ -9,6 +9,7 @@ public class PQHeap implements PQ {
 
 
     /**
+     * Constructor.
      * @param maxElements The amount of elements that there is room for in the que
      */
     public PQHeap(int maxElements) {
@@ -16,7 +17,10 @@ public class PQHeap implements PQ {
         heap[0] = new Element(0, null); // one Index
     }
 
-
+    /**
+     * Returns the element on the 1 place in the array, and then heapifys the remaining
+     * @return Element With the lowest key
+     */
     @Override
     public Element extractMin() {
         Element min = heap[1];
@@ -26,14 +30,17 @@ public class PQHeap implements PQ {
         return min;
     }
 
-
+    /**
+     * inserts the Element on the last place in the array and then bubbels it up to the right place.
+     * @param e The element that will be insert.
+     */
     @Override
     public void insert(Element e) {
         heap[++counter] = e; // insert on last available place
         int current = counter; // the index where the element has bin inserted
 
         //decrease-key
-        while (heap[Parent(current)].key > heap[current].key) { //if the heap is the first element it will just paste it and skip the while
+        while (current > 1 &&heap[Parent(current)].key > heap[current].key) { //if the heap is the first element it will just paste it and skip the while
             swap(current, Parent(current)); //swaps the two elements
             current = Parent(current); // sets heapsize to the half
         }
