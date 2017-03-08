@@ -4,6 +4,7 @@ import java.util.Scanner;
  * Created by karim møller on 23-02-2017.
  */
 public class Heapsort {
+
     public static void main(String[] args) {
 
         PQ pq = new PQHeap(1000);
@@ -16,6 +17,7 @@ public class Heapsort {
             n++;
             pq.insert(new Element(i,null));
         }
+
         while (n > 0){
             System.out.println(pq.extractMin().key);
             n--;

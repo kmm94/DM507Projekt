@@ -3,64 +3,78 @@
  */
 public class PQHeap implements PQ {
 
-    private Element[] elements;
-    private final int oneIndex = 1;
-    private int counter = oneIndex;
+    private Element[] heap;
+    private final int one = 1; // adding to one Index the array
+    private int counter = 0; // keeps track the amount of elemens in the heap
+
+
     /**
      * @param maxElements The amount of elements that there is room for in the que
      */
-    public PQHeap(int maxElements){
-        elements = new Element[maxElements + oneIndex];
+    public PQHeap(int maxElements) {
+        heap = new Element[maxElements + one];
+        heap[0] = new Element(0, null); // one Index
     }
+
 
     @Override
     public Element extractMin() {
-        Element min = elements[1];
-        elements[1] = elements[elements.length-1];
+        Element min = heap[1];
+        heap[1] = heap[counter];
+        counter--;
         MinHeapify(1);
         return min;
     }
 
+
     @Override
     public void insert(Element e) {
-        //insert
-        elements[elements.length - oneIndex] = e; // insert on last place
-        int heapsize = elements.length - oneIndex; // index where the element has bin inserted
-        System.out.println(elements[parent(heapsize)]);
+        heap[++counter] = e; // insert on last available place
+        int current = counter; // the index where the element has bin inserted
 
-        //increase-key
-        while ( heapsize > 1 && elements[parent(heapsize)].key < elements[heapsize].key){
-            swap(heapsize,parent(heapsize)); //swaps the to elements
-            heapsize = parent(heapsize); // sets heapsize to the half
+        //decrease-key
+        while (heap[Parent(current)].key > heap[current].key) { //if the heap is the first element it will just paste it and skip the while
+            swap(current, Parent(current)); //swaps the two elements
+            current = Parent(current); // sets heapsize to the half
         }
-        System.out.println("insertion complete!");
     }
 
-    private void MinHeapify(int i){
-        int left = i*2;
-        int right = i*2+1;
+    //min Heap
+    private void MinHeapify(int pos) {
+        int left = leftChild(pos);
+        int right = rightChild(pos);
         int Smallest;
-        if(left >= elements.length && elements[left+oneIndex].key < elements[i+oneIndex].key) {
+        if(left <= counter && heap[left].key < heap[pos].key) {
+
             Smallest = left;
-            } else {
-            Smallest = i;
+        } else {
+            Smallest = pos;
         }
-        if(right >= elements.length && elements[right+oneIndex].key < elements[Smallest+oneIndex].key){
+        if(right <= counter && heap[right].key < heap[Smallest].key){
             Smallest = right;
         }
-        if (Smallest != i){
-            swap(i, Smallest);
+        if (Smallest != pos){
+            swap(pos, Smallest);
+            MinHeapify(Smallest);
         }
     }
 
     private void swap(int i, int k) {
-        Element temp = elements[i];
-        elements[i] = elements[k];
-        elements[k] = temp;
+        Element temp ;
+        temp = heap[i];
+        heap[i] = heap[k];
+        heap[k] = temp;
     }
 
-    private int parent(int i){
-        return i/2;
+    private int Parent(int i) {
+        return i / 2;
     }
 
+    private int leftChild(int i) {
+        return i * 2;
+    }
+
+    private int rightChild(int i) {
+        return i * 2 + 1;
+    }
 }
